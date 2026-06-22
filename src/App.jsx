@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Globe3D from './components/Globe3D';
 import DMZMap from './components/DMZMap';
@@ -8,6 +8,8 @@ import ThreatLevel from './components/ThreatLevel';
 import StatsGrid from './components/StatsGrid';
 import StatusPanel from './components/StatusPanel';
 import WeatherPanel from './components/WeatherPanel';
+import { fetchKoreanNews, formatTimeAgo } from './utils/api';
+import { MOCK_NEWS } from './data/mock-news';
 
 export default function App() {
   return (
@@ -86,10 +88,6 @@ function NewsFeedSidebar() {
 }
 
 // 사이드바 뉴스용 간단 훅 (메인 NewsFeed와 데이터 공유 최적화 가능)
-import { useState, useEffect } from 'react';
-import { fetchKoreanNews, formatTimeAgo } from './utils/api';
-import { MOCK_NEWS } from './data/mock-news';
-
 function useNewsForSidebar() {
   const [news, setNews] = useState([]);
   const [isUsingMock, setIsUsingMock] = useState(false);
@@ -112,3 +110,4 @@ function useNewsForSidebar() {
 
   return { news, isUsingMock };
 }
+

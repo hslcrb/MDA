@@ -54,6 +54,16 @@ export default function DMZMap() {
 
     mapRef.current = map;
 
+    const resizeObserver = new ResizeObserver(() => {
+      if (mapRef.current) {
+        mapRef.current.resize();
+      }
+    });
+
+    if (mapContainerRef.current) {
+      resizeObserver.observe(mapContainerRef.current);
+    }
+
     map.addControl(new maplibregl.NavigationControl({
       showCompass: true,
       showZoom: true,
@@ -280,6 +290,9 @@ export default function DMZMap() {
     });
 
     return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
